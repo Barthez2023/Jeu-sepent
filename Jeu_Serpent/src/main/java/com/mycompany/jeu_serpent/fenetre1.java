@@ -14,8 +14,8 @@ import javax.swing.*;
  *
  * @author PC
  */
-public class fenetre1 extends javax.swing.JFrame {
-
+public class fenetre1 extends javax.swing.JFrame{
+ 
     /**
      * Creates new form fenetre1
      */
@@ -40,15 +40,22 @@ public class fenetre1 extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
+        jFrame1.setPreferredSize(new java.awt.Dimension(600, 600));
+        jFrame1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jFrame1MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
         jFrame1Layout.setHorizontalGroup(
             jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
         jFrame1Layout.setVerticalGroup(
             jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -126,66 +133,226 @@ public class fenetre1 extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private GamePanel panel3 = null;
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        GamePanel panel3=new GamePanel();
+       /* GamePanel panel3=new GamePanel();
         panel3.setBackground(Color.BLACK);
-        panel3.setBounds(0, 0, 200, 200);
-        jFrame1.setVisible(true);
-        jFrame1.setBounds(100, 100, 600, 600);
+        panel3.setSize(600, 600);
+        panel3.palceCible(); 
+        
+        jFrame1.setBounds(100, 100, 614, 635);
         jFrame1.add(panel3);
-        //jFrame1.pack();
-        repaint();
+        jFrame1.setVisible(true);
+        jFrame1.setResizable(false);
+        //repaint();
+        //jFrame1.pack(); */
+       
+       if (panel3 == null) {
+        // Créer une nouvelle instance de GamePanel.
+        panel3 = new GamePanel();
+        panel3.setBackground(Color.BLACK);
+        panel3.setSize(600, 600);
+
+        // Ajouter le panel3 à jFrame1
+        jFrame1.setBounds(100, 100, 614, 635);
+        jFrame1.add(panel3);
+        jFrame1.setVisible(true);
+        jFrame1.setResizable(false);
+    }
+        // Revalidate et repaint pour s'assurer que le JFrame et le JPanel sont bien rendus.
+        jFrame1.repaint();
+        panel3.palceCible();
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    class GamePanel extends JPanel {
-    @Override
-    protected void paintComponent(Graphics g2) {
+    
+    
+    
+    //************************************************************************************************
+    private void jFrame1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFrame1MouseClicked
+        System.out.println(evt.getX() +" "+evt.getY());
+    }//GEN-LAST:event_jFrame1MouseClicked
+
+    //************************************************************************************************
+    class GamePanel extends JPanel implements KeyListener{
+        Tile debutSerpent1;
+        Timer gameloop;
+        //debut du sertpent genre la tete du serpent
+        //Tile debutSerpent;
+        ArrayList<Tile> corpserpent;
+        // la cible : l'objectif a atteindre par le serpent
+        Tile cible;
+        Random random;              //c'est un object random qui vas permetre de deplacer la cible
+
+        //le Timer est  un moyen de programmer une action à faire après un certain délai, ou à intervalles réguliers.
+        boolean gameOver=false;
+        int newX,newY;
+        public GamePanel() {
+            // Initialisation du serpent
+            debutSerpent1 = new Tile(5, 5); // ou comme tu veux
+            cible=new Tile(10, 10);
+            random=new Random();
+            corpserpent=new ArrayList<Tile>();     //permert de stocker le corps du serpenty au fur et a mesure qu'il touche la cible
+            //initialiasation de valeurs  de x te y
+            //palceCible();                   //cette fonction permettra de deplacer la cible
+            newX=0;
+            newY=0;
+            // Initialisation du timer
+            gameloop = new Timer(100, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    move();
+                    repaint();
+                }
+            });
+
+            gameloop.start(); // ✅ Ici c'est bon car on est dans le constructeur
+            addKeyListener((KeyListener) this);                     //ajout l'evenement listener au panel
+            setFocusable(true);  
+        }
+        @Override
+        protected void paintComponent(Graphics g2) {
             super.paintComponent(g2);
             Graphics2D g = (Graphics2D) g2;
             drawRectangle(g);
         }
-    }
-    // on vas tarcer le rectangle de couleur verte
-    public void drawRectangle(Graphics g){
+        // on vas tarcer le rectangle de couleur verte
+        public void drawRectangle(Graphics g){
         // on vas dessiner la grid
-        g.setColor(new Color(200, 200, 200, 100));
-        for (int i = 0; i < boardWith/tileSize; i++) {
-            g.drawLine(i*tileSize, 0, i*tileSize,boarHeigth);
-            g.drawLine(0, i*tileSize, boardWith,i*tileSize);
+            g.setColor(new Color(200, 200, 200, 100));
+            for (int i = 0; i <boardWith/tileSize; i++) {
+                g.drawLine(i*tileSize, 0, i*tileSize,boarHeigth);
+                g.drawLine(0, i*tileSize, boardWith,i*tileSize);
+            }
+
+
+            // ici on dessine la cible
+            g.setColor(Color.red);                                                            
+            g.fillRect(cible.x*tileSize, cible.y*tileSize, tileSize, tileSize);   //code repere 1.1.2
+
+            //ici on dessine le serpent
+            g.setColor(Color.green);                                                            //met la couleur du rectangle en vert
+            g.fillRect(debutSerpent1.x*tileSize, debutSerpent1.y*tileSize, tileSize, tileSize);  //permet de tracer le rectangle avec des dimension de tile et palcer ȧla position debutSerpent.x*tileSize en x, debutSerpent.y*tileSize en y   //code repere 1.1.2
+
+
+            //ici on dessine le corp du serpent
+            for (int i = 0; i <corpserpent.size() ; i++) {
+                Tile body=corpserpent.get(i);
+                g.setColor(Color.green);                                                           
+                g.fillRect(body.x*tileSize, body.y*tileSize, tileSize, tileSize);    
+            }
+
+            // ici on ecrit le score
+            g.setFont(new Font("Arial", Font.PLAIN, 17));
+            if (gameOver){
+                g.setColor(Color.red);
+                g.drawString("Game Over : "+String.valueOf(corpserpent.size()), tileSize-16, tileSize);
+
+            }
+            else{
+                g.drawString("Score :"+String.valueOf(corpserpent.size()), tileSize-16, tileSize);
+            }
         }
-     
-
-        /*// ici on dessine la cible
-        g.setColor(Color.red);                                                            
-        //g.fillRect(cible.x*tileSize, cible.y*tileSize, tileSize, tileSize);   //code repere 1.1.2
-        g.fill3DRect(cible.x*tileSize, cible.y*tileSize, tileSize, tileSize,true);
-
-        //ici on dessine le serpent
-        g.setColor(Color.green);                                                            //met la couleur du rectangle en vert
-        //g.fillRect(debutSerpent.x*tileSize, debutSerpent.y*tileSize, tileSize, tileSize);  //permet de tracer le rectangle avec des dimension de tile et palcer ȧla position debutSerpent.x*tileSize en x, debutSerpent.y*tileSize en y   //code repere 1.1.2
-        g.fill3DRect(debutSerpent.x*tileSize, debutSerpent.y*tileSize, tileSize, tileSize,true);
-
-        //ici on dessine le corp du serpent
-        for (int i = 0; i <corpserpent.size() ; i++) {
-            Tile body=corpserpent.get(i);
-            g.setColor(Color.green);                                                           
-            //g.fillRect(body.x*tileSize, body.y*tileSize, tileSize, tileSize);    //code repere 1.1.2
-            g.fill3DRect(body.x*tileSize, body.y*tileSize, tileSize, tileSize,true);  
-
+        
+        //************************************************************************************************
+    
+    
+        private class Tile {     // cette classe nous permet d'initialiser le creation dune tuile genre un carreau
+            int x,y;
+            Tile(int x,int y){
+                this.x=x;
+                this.y=y;
+            }
         }
 
-        // ici on ecrit le score
-        g.setFont(new Font("Arial", Font.PLAIN, 17));
-        if (gameOver){
-            g.setColor(Color.red);
-            g.drawString("Game Over : "+String.valueOf(corpserpent.size()), tileSize-16, tileSize);
-            
+        //************************************************************************************************
+
+        public void palceCible(){
+            cible.x=random.nextInt(boardWith/tileSize);        //donne un numbre entre 0 et 24 dans notre cas car on a 600/25
+            cible.y=random.nextInt(boarHeigth/tileSize);       //donne un numbre entre 0 et 24 dans notre cas car on a 600/25
+            System.out.println("Cible deplacee : " + cible.x + ", " + cible.y);
         }
-        else{
-            g.drawString("Score :"+String.valueOf(corpserpent.size()), tileSize-16, tileSize);
-        }*/
+
+        //************************************************************************************************
+
+        public boolean collision(Tile tile1,Tile tile2){                          //cette fonction verifie une quelconque colision entre le serpent et la cible
+
+            if (tile1.x==tile2.x && tile1.y==tile2.y){
+                return true;
+            }
+            return false;
+        }
+
+        //************************************************************************************************
+
+        public void move(){
+            if (collision(debutSerpent1, cible)==true) {
+                corpserpent.add(new Tile(cible.x, cible.y));
+                palceCible();
+            }
+
+            //deplacement du corp entier du serpent lorsqu'il atteint la cible
+            for (int i = corpserpent.size()-1; i >=0; i--) {
+                Tile newpartieSerpent=corpserpent.get(i);
+                if (i==0) {
+                    newpartieSerpent.x=debutSerpent1.x;
+                    newpartieSerpent.y=debutSerpent1.y;
+                }
+                else{
+                    Tile partieAvant=corpserpent.get(i-1);
+                    newpartieSerpent.x=partieAvant.x;
+                    newpartieSerpent.y=partieAvant.y;
+                }
+            }
+
+            //debutSerpent comme commencement
+            debutSerpent1.x+=newX;
+            debutSerpent1.y+=newY;
+
+            //game over condition
+            for (int i = 0; i < corpserpent.size(); i++) {
+                Tile partieSerpent=corpserpent.get(i);
+                if (collision(partieSerpent, debutSerpent1)==true) {
+                    gameOver=true;
+                }
+            }
+            if (debutSerpent1.x*tileSize<0 || debutSerpent1.x*tileSize>=boardWith || debutSerpent1.y*tileSize<0 || debutSerpent1.y*tileSize>=boarHeigth) {
+                gameOver=true;
+            }
+
+        }
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode()==e.VK_UP && newY!=1 ) {
+                newX=0;
+                newY=-1;
+            }
+            else if (e.getKeyCode()==e.VK_DOWN && newY!=-1) {
+                newX=0;
+                newY=1;
+            }
+            else if (e.getKeyCode()==e.VK_LEFT && newX!=1) {
+                newX=-1;
+                newY=0;
+            }
+            else if (e.getKeyCode()==e.VK_RIGHT && newX!=-1) {
+                newX=1;
+                newY=0;
+            }
     }
+
+    @Override
+    public void keyReleased(KeyEvent e) {}
+    @Override
+    public void keyTyped(KeyEvent e) {}
+
+    
+    }
+  
+   
+    
+    
+    
     /**
      * @param args the command line arguments
      */
