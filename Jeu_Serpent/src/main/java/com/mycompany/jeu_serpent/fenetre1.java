@@ -33,6 +33,9 @@ public class fenetre1 extends javax.swing.JFrame{
     private void initComponents() {
 
         jFrame1 = new javax.swing.JFrame();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -40,22 +43,47 @@ public class fenetre1 extends javax.swing.JFrame{
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
-        jFrame1.setPreferredSize(new java.awt.Dimension(600, 600));
-        jFrame1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jFrame1MouseClicked(evt);
-            }
-        });
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("GAME - OVER");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("SCORE ");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 255, 0));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("0");
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
         jFrame1Layout.setHorizontalGroup(
             jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(jFrame1Layout.createSequentialGroup()
+                .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jFrame1Layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(jLabel3))
+                    .addGroup(jFrame1Layout.createSequentialGroup()
+                        .addGap(83, 83, 83)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jFrame1Layout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         jFrame1Layout.setVerticalGroup(
             jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(jFrame1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -68,8 +96,13 @@ public class fenetre1 extends javax.swing.JFrame{
         });
 
         jButton2.setText("Exit Game");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "50", "100", "150", "200", "250", "300" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vitesse", "50", "100", "150", "200", "250", "300" }));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -90,7 +123,7 @@ public class fenetre1 extends javax.swing.JFrame{
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,14 +142,14 @@ public class fenetre1 extends javax.swing.JFrame{
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(45, 45, 45)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,48 +166,30 @@ public class fenetre1 extends javax.swing.JFrame{
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private GamePanel panel3 = null;
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       /* GamePanel panel3=new GamePanel();
-        panel3.setBackground(Color.BLACK);
-        panel3.setSize(600, 600);
-        panel3.palceCible(); 
-        
-        jFrame1.setBounds(100, 100, 614, 635);
-        jFrame1.add(panel3);
-        jFrame1.setVisible(true);
-        jFrame1.setResizable(false);
-        //repaint();
-        //jFrame1.pack(); */
-       
-       if (panel3 == null) {
-        // Créer une nouvelle instance de GamePanel.
-        panel3 = new GamePanel();
-        panel3.setBackground(Color.BLACK);
-        panel3.setSize(600, 600);
 
-        // Ajouter le panel3 à jFrame1
-        jFrame1.setBounds(100, 100, 614, 635);
-        jFrame1.add(panel3);
-        jFrame1.setVisible(true);
-        jFrame1.setResizable(false);
-    }
-        // Revalidate et repaint pour s'assurer que le JFrame et le JPanel sont bien rendus.
-        jFrame1.repaint();
-        panel3.palceCible();
-        
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       JFrame jFrame1 = new JFrame("Snake Game");
+
+            GamePanel panel3 = new GamePanel(600,600);
+            //panel3.setBackground(java.awt.Color.BLACK);
+            jFrame1.add(panel3);
+            jFrame1.pack();
+            jFrame1.setLocation(100, 100);
+            jFrame1.setResizable(false);
+            jFrame1.setVisible(true);
+            
+            panel3.palceCible();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    
-    
-    
-    //************************************************************************************************
-    private void jFrame1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFrame1MouseClicked
-        System.out.println(evt.getX() +" "+evt.getY());
-    }//GEN-LAST:event_jFrame1MouseClicked
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     //************************************************************************************************
     class GamePanel extends JPanel implements KeyListener{
+        int boardWith;
+        int boarHeigth;
+        int tileSize=25;
         Tile debutSerpent1;
         Timer gameloop;
         //debut du sertpent genre la tete du serpent
@@ -187,7 +202,14 @@ public class fenetre1 extends javax.swing.JFrame{
         //le Timer est  un moyen de programmer une action à faire après un certain délai, ou à intervalles réguliers.
         boolean gameOver=false;
         int newX,newY;
-        public GamePanel() {
+        public GamePanel(int boardWith,int boarHeigth) {
+            //initialisation du jpanel
+            this.boardWith=boardWith;
+            this.boarHeigth=boarHeigth;
+            setPreferredSize(new Dimension(this.boardWith,this.boarHeigth));
+            setBackground(Color.BLACK);
+            
+            
             // Initialisation du serpent
             debutSerpent1 = new Tile(5, 5); // ou comme tu veux
             cible=new Tile(10, 10);
@@ -197,8 +219,16 @@ public class fenetre1 extends javax.swing.JFrame{
             //palceCible();                   //cette fonction permettra de deplacer la cible
             newX=0;
             newY=0;
+            
+            //choisir la vitesse de jeu que l'on veut
+            if(jComboBox1.getSelectedIndex()==0){
+                vitesse=200;
+            }
+            else{
+                 vitesse=Integer.parseInt((String) jComboBox1.getSelectedItem());
+            }
             // Initialisation du timer
-            gameloop = new Timer(100, new ActionListener() {
+            gameloop = new Timer(vitesse, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     move();
@@ -206,7 +236,7 @@ public class fenetre1 extends javax.swing.JFrame{
                 }
             });
 
-            gameloop.start(); // ✅ Ici c'est bon car on est dans le constructeur
+            gameloop.start();                                     // Ici c'est bon car on est dans le constructeur
             addKeyListener((KeyListener) this);                     //ajout l'evenement listener au panel
             setFocusable(true);  
         }
@@ -247,7 +277,6 @@ public class fenetre1 extends javax.swing.JFrame{
             if (gameOver){
                 g.setColor(Color.red);
                 g.drawString("Game Over : "+String.valueOf(corpserpent.size()), tileSize-16, tileSize);
-
             }
             else{
                 g.drawString("Score :"+String.valueOf(corpserpent.size()), tileSize-16, tileSize);
@@ -270,7 +299,7 @@ public class fenetre1 extends javax.swing.JFrame{
         public void palceCible(){
             cible.x=random.nextInt(boardWith/tileSize);        //donne un numbre entre 0 et 24 dans notre cas car on a 600/25
             cible.y=random.nextInt(boarHeigth/tileSize);       //donne un numbre entre 0 et 24 dans notre cas car on a 600/25
-            System.out.println("Cible deplacee : " + cible.x + ", " + cible.y);
+            //System.out.println("Cible deplacee : " + cible.x + ", " + cible.y);
         }
 
         //************************************************************************************************
@@ -319,7 +348,15 @@ public class fenetre1 extends javax.swing.JFrame{
             if (debutSerpent1.x*tileSize<0 || debutSerpent1.x*tileSize>=boardWith || debutSerpent1.y*tileSize<0 || debutSerpent1.y*tileSize>=boarHeigth) {
                 gameOver=true;
             }
-
+            if(gameOver==true){
+                gameloop.stop();
+                //JOptionPane.showMessageDialog(this, "Game over - Score: " + corpserpent.size());
+                String score=String.valueOf(corpserpent.size());
+                jLabel5.setText(score);
+                jFrame1.setVisible(true);
+                jFrame1.setLocation(150, 150);
+                jFrame1.setSize(400,300);
+            }
         }
     @Override
     public void keyPressed(KeyEvent e) {
@@ -387,10 +424,7 @@ public class fenetre1 extends javax.swing.JFrame{
             }
         });
     }
-
-    int boardWith=600;
-    int boarHeigth=600;
-    int tileSize=25;
+int vitesse=0;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -398,6 +432,9 @@ public class fenetre1 extends javax.swing.JFrame{
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
